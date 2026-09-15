@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NetWatch — Cloud-Based Network Alert Notification System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="pulse-dot" id="connDot"></span>
+    <div class="brand-text">
+      <span class="brand-name">NetWatch</span>
+      <span class="brand-sub">Cloud-Based Network Alert Notification System</span>
+    </div>
+  </div>
+  <div class="topbar-right">
+    <span class="clock" id="clock">--:--:--</span>
+    <button class="btn btn-accent" id="testAlertBtn">Send test alert</button>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="stat-strip" id="statStrip" aria-label="System summary">
+    <div class="stat"><span class="stat-value" id="statTotal">0</span><span class="stat-label">Monitored devices</span></div>
+    <div class="stat stat-up"><span class="stat-value" id="statUp">0</span><span class="stat-label">Up</span></div>
+    <div class="stat stat-down"><span class="stat-value" id="statDown">0</span><span class="stat-label">Down</span></div>
+    <div class="stat stat-warn"><span class="stat-value" id="statOpen">0</span><span class="stat-label">Open alerts</span></div>
+    <div class="stat"><span class="stat-value" id="statNotif">0</span><span class="stat-label">Notifications sent</span></div>
+  </section>
+
+  <section class="panel" id="devicesPanel">
+    <div class="panel-head">
+      <h2>Monitored devices &amp; services</h2>
+      <button class="btn btn-ghost" id="toggleAddDevice">+ Add device</button>
+    </div>
+
+    <form class="inline-form hidden" id="addDeviceForm">
+      <div class="field">
+        <label>Name</label>
+        <input type="text" name="name" placeholder="e.g. Core Switch — Lagos HQ" required />
+      </div>
+      <div class="field">
+        <label>Target</label>
+        <input type="text" name="target" placeholder="host:port or https://url" required />
+      </div>
+      <div class="field field-sm">
+        <label>Method</label>
+        <select name="check_method">
+          <option value="tcp">TCP connect</option>
+          <option value="http">HTTP(S)</option>
+        </select>
+      </div>
+      <div class="field field-sm">
+        <label>Interval (s)</label>
+        <input type="number" name="polling_interval" value="15" min="5" />
+      </div>
+      <div class="field field-sm">
+        <label>Fail threshold</label>
+        <input type="number" name="fail_threshold" value="3" min="1" />
+      </div>
+      <button type="submit" class="btn btn-accent">Register device</button>
+    </form>
+
+    <table class="data-table" id="devicesTable">
+      <thead>
+        <tr>
+          <th>Status</th><th>Device</th><th>Target</th><th>Method</th>
+          <th>Last checked</th><th>Latency</th><th>Fails</th><th></th>
+        </tr>
+      </thead>
+      <tbody id="devicesBody">
+        <tr><td colspan="8" class="empty-row">No devices registered yet — add one above.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <div class="two-col">
+    <section class="panel" id="alertsPanel">
+      <div class="panel-head"><h2>Alert history</h2></div>
+      <ul class="feed" id="alertsFeed">
+        <li class="empty-row">No alerts have been raised yet.</li>
+      </ul>
+    </section>
+
+    <section class="panel" id="notifPanel">
+      <div class="panel-head"><h2>Notification log</h2></div>
+      <ul class="feed" id="notifFeed">
+        <li class="empty-row">No notifications dispatched yet.</li>
+      </ul>
+    </section>
+  </div>
+
+  <section class="panel" id="adminsPanel">
+    <div class="panel-head">
+      <h2>Administrators</h2>
+      <button class="btn btn-ghost" id="toggleAddAdmin">+ Add administrator</button>
+    </div>
+
+    <form class="inline-form hidden" id="addAdminForm">
+      <div class="field">
+        <label>Full name</label>
+        <input type="text" name="full_name" placeholder="e.g. Amaka Obi" required />
+      </div>
+      <div class="field">
+        <label>Email</label>
+        <input type="email" name="email" placeholder="admin@example.com" />
+      </div>
+      <div class="field">
+        <label>Phone (SMS)</label>
+        <input type="text" name="phone_number" placeholder="+2348012345678" />
+      </div>
+      <button type="submit" class="btn btn-accent">Add administrator</button>
+    </form>
+
+    <table class="data-table" id="adminsTable">
+      <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Channels</th><th></th></tr></thead>
+      <tbody id="adminsBody">
+        <tr><td colspan="5" class="empty-row">No administrators registered yet.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <footer class="footnote">
+    Final year project — Development of a Cloud-Based Network Alert Notification System.
+    Email/SMS delivery runs in <strong>simulated mode</strong> until SMTP/Twilio credentials are set in <code>.env</code> — see README.
+  </footer>
+
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>

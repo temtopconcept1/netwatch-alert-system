@@ -1,0 +1,21 @@
+{
+  "name": "cloud-network-alert-system",
+  "version": "1.0.0",
+  "description": "Development of a Cloud-Based Network Alert Notification System - Final Year Project",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "demo:targets": "node demo/start-demo-targets.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.3.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "nodemailer": "^6.9.14",
+    "node-cron": "^3.0.3",
+    "twilio": "^5.2.2"
+  }
+}
